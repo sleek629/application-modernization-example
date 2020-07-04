@@ -4,9 +4,8 @@ This is a simple word database application using LAMP stack.
 
 This application saves the input character string and the number of times in the database and display on the web.
 
-![index](./images/index.png)
-
-![test](./images/test.png)
+<img src="./images/index.png" width="480px">
+<img src="./images/test.png" width="480px">
 
 ## Environment
 
