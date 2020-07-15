@@ -11,6 +11,8 @@ In this step, LAMP stack is used.
 
 ## Setup
 
+Run this command Ubuntu.
+
 ```bash
 # Install LAMP stack
 sudo apt update

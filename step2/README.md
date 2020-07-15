@@ -10,6 +10,8 @@ In this step, Golang + MySQL is used.
 
 ## Setup
 
+Run this command on Ubuntu.
+
 ```bash
 # Install Golang v1.13.12
 wget https://golang.org/dl/go1.13.12.linux-amd64.tar.gz
