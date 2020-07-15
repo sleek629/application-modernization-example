@@ -23,3 +23,7 @@ Linux + Apache + MySQL + PHP
 ### Step 2
 
 Golang + MySQL
+
+### Step 2.5
+
+GAE(Golang) + Cloud SQL
