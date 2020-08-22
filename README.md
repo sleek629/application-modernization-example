@@ -27,3 +27,11 @@ Golang + MySQL
 ### Step 2.5
 
 GAE(Golang) + Cloud SQL
+
+### Step 3
+
+App on Docker
+
+### Step 4
+
+App with better architecture

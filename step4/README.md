@@ -1,6 +1,8 @@
-# Step 3: App on Docker
+# Step 4: App with better architecture
 
-In this step, Docker is used to build Golang + MySQL environment.
+In this step, the application allowed to switch the database between MySQL and On-Memory.
+
+Switching between MySQL DB and On-Memory DB can be done by setting the environment variable MYSQL_CONNECTION.
 
 ## Environment
 
@@ -17,10 +19,23 @@ Run this command on Container-Optimized OS.
 ```bash
 # Clone source files
 git clone https://github.com/sleek629/application-modernization-example.git
-cd application-modernization-example/step3/src
+cd application-modernization-example/step4/src
+```
 
+### Using MySQL
+
+```
 # Run http server using Docker compose
-docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v "$PWD:$PWD" -w="$PWD" docker/compose:1.26.2 up
+docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v "$PWD:$PWD" -w="$PWD" docker/compose:1.26.2 -f docker-compose-1.yml up
+```
+
+### Using On-Memory DB
+
+If you start application this way, you don't have to prepare MySQL DB.
+
+```
+# Run http server using Docker compose
+docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v "$PWD:$PWD" -w="$PWD" docker/compose:1.26.2 -f docker-compose-2.yml up
 ```
 
  ## Access
