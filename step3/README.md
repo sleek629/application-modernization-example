@@ -1,37 +1,26 @@
-# Step 2: Golang + MySQL
+# Step 3: App on Docker
 
-In this step, Golang + MySQL is used.
+In this step, Docker is used to build Golang + MySQL environment.
 
 ## Environment
 
-- OS : Ubuntu 20.04 LTS on GCP
+- OS : Container-Optimized OS 81-12871.1160.0 stable on GCP
+- Docker: 19.03.6
+- Docker-compose: 1.26.2 (Using Docker)
 - Golang : 1.13.12
-- MySQL : 8.0.20
+- MySQL : 8.0
 
 ## Setup
 
-Run this command on Ubuntu.
+Run this command on Container-Optimized OS.
 
 ```bash
-# Install Golang v1.13.12
-wget https://golang.org/dl/go1.13.12.linux-amd64.tar.gz
-sudo tar -C /usr/local -xzf go1.13.12.linux-amd64.tar.gz
-echo "export PATH=$PATH:/usr/local/go/bin" >> ~/.bashrc
-mkdir $HOME/go
-echo "export GOPATH=$HOME/go"
-
+# Clone source files
 git clone https://github.com/sleek629/application-modernization-example.git
-cd application-modernization-example/step2/src
-# Install the required Go modules
-go mod tidy
+cd application-modernization-example/step3/src
 
-# Install MySQL server
-sudo apt update
-sudo apt install -y mysql-server
-sudo mysql -u root < init.sql
-
-# Run http server using Golang
-go run main.go
+# Run http server using Docker compose
+docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v "$PWD:$PWD" -w="$PWD" docker/compose:1.26.2 up
 ```
 
  ## Access
