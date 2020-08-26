@@ -1,0 +1,14 @@
+version: '3'
+services:
+  web:
+    build:
+      context: ./web
+    environment:
+      API_URL: http://api:1323
+    ports:
+      - "8080:8080"
+    restart: always
+  api:
+    build:
+      context: ./api
+    restart: always

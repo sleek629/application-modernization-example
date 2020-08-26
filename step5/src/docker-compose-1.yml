@@ -1,0 +1,23 @@
+version: '3'
+services:
+  mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_RANDOM_ROOT_PASSWORD: "yes"
+    volumes:
+      - ./mysql:/docker-entrypoint-initdb.d
+
+  web:
+    build:
+      context: ./web
+    environment:
+      API_URL: http://api:1323
+    ports:
+      - "8080:8080"
+    restart: always
+  api:
+    build:
+      context: ./api
+    environment:
+      MYSQL_CONNECTION: user:Password@123@tcp(mysql:3306)/word_db
+    restart: always
