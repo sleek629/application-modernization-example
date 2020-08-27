@@ -35,3 +35,7 @@ App on Docker
 ### Step 4
 
 App with better architecture
+
+### Step 5
+
+App with REST API
