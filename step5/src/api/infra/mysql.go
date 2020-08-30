@@ -25,18 +25,18 @@ func NewSQLHandler(conn string) *MySQLHandler {
 	return &MySQLHandler{db}
 }
 
-func (mySQLHandler *MySQLHandler) GetWords() (data []*model.Data, err error) {
-	rows, err := mySQLHandler.db.Query("SELECT word, num FROM word_tb ORDER BY num DESC")
+func (mySQLHandler *MySQLHandler) GetWords() (wordCounts []*model.WordCount, err error) {
+	rows, err := mySQLHandler.db.Query("SELECT word, count FROM word_tb ORDER BY count DESC")
 	if err != nil {
 		return nil, err
 	}
 	for rows.Next() {
-		var wordDB model.Data
-		err = rows.Scan(&wordDB.Word, &wordDB.Num)
-		data = append(data, &wordDB)
+		var wordCount model.WordCount
+		err = rows.Scan(&wordCount.Word, &wordCount.Count)
+		wordCounts = append(wordCounts, &wordCount)
 	}
 
-	return data, nil
+	return wordCounts, nil
 }
 
 func (mySQLHandler *MySQLHandler) UpdateWord(word string) (err error) {
@@ -50,7 +50,7 @@ func (mySQLHandler *MySQLHandler) UpdateWord(word string) (err error) {
 	// If rows exists, the word is already in word_tb.
 	// If not, the word needs to be inserted to word_tb.
 	if rows.Next() {
-		stmtUp, err := mySQLHandler.db.Prepare("UPDATE word_tb SET num = num + 1 WHERE word = ?")
+		stmtUp, err := mySQLHandler.db.Prepare("UPDATE word_tb SET count = count + 1 WHERE word = ?")
 		if err != nil {
 			return err
 		}
@@ -61,7 +61,7 @@ func (mySQLHandler *MySQLHandler) UpdateWord(word string) (err error) {
 			return err
 		}
 	} else {
-		stmtIn, err := mySQLHandler.db.Prepare("INSERT INTO word_tb (word, num) VALUES (?, 1)")
+		stmtIn, err := mySQLHandler.db.Prepare("INSERT INTO word_tb (word, count) VALUES (?, 1)")
 		if err != nil {
 			return err
 		}

@@ -13,30 +13,30 @@ import (
 
 var db *sql.DB
 
-// Data corresponds to the column of word_tb
-type Data struct {
-	Word string `db:"word"`
-	Num  int    `db:"num"`
+// WordCount corresponds to the column of word_tb
+type WordCount struct {
+	Word  string `db:"word"`
+	Count int    `db:"count"`
 }
 
 // Output is the data to pass to template file "index.html"
 type Output struct {
-	Input string
-	Data  []Data
+	Input      string
+	WordCounts []WordCount
 }
 
-func getWords() (words []Data, err error) {
-	rows, err := db.Query("SELECT word, num FROM word_tb ORDER BY num DESC")
+func getWords() (wordCounts []WordCount, err error) {
+	rows, err := db.Query("SELECT word, count FROM word_tb ORDER BY count DESC")
 	if err != nil {
 		return nil, err
 	}
 	for rows.Next() {
-		var wordDB Data
-		err = rows.Scan(&wordDB.Word, &wordDB.Num)
-		words = append(words, wordDB)
+		var wordCount WordCount
+		err = rows.Scan(&wordCount.Word, &wordCount.Count)
+		wordCounts = append(wordCounts, wordCount)
 	}
 
-	return words, nil
+	return wordCounts, nil
 }
 
 func updateWords(word string) error {
@@ -50,7 +50,7 @@ func updateWords(word string) error {
 	// If rows exists, the word is already in word_tb.
 	// If not, the word needs to be inserted to word_tb.
 	if rows.Next() {
-		stmtUp, err := db.Prepare("UPDATE word_tb SET num = num + 1 WHERE word = ?")
+		stmtUp, err := db.Prepare("UPDATE word_tb SET count = count + 1 WHERE word = ?")
 		if err != nil {
 			return err
 		}
@@ -61,7 +61,7 @@ func updateWords(word string) error {
 			return err
 		}
 	} else {
-		stmtIn, err := db.Prepare("INSERT INTO word_tb (word, num) VALUES (?, 1)")
+		stmtIn, err := db.Prepare("INSERT INTO word_tb (word, count) VALUES (?, 1)")
 		if err != nil {
 			return err
 		}
@@ -94,7 +94,7 @@ func mainPage(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	data, err := getWords()
+	wordCounts, err := getWords()
 	if err != nil {
 		log.Println(err)
 		fmt.Fprintf(w, err.Error())
@@ -104,8 +104,8 @@ func mainPage(w http.ResponseWriter, r *http.Request) {
 	// html/template already has xss countermeasure function
 	tpl := template.Must(template.ParseFiles("template/index.html"))
 	output := Output{
-		Input: input,
-		Data:  data,
+		Input:      input,
+		WordCounts: wordCounts,
 	}
 
 	tpl.Execute(w, output)

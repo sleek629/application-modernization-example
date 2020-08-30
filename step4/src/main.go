@@ -16,8 +16,8 @@ var databaseHandler infra.DatabaseHandler
 
 // Output is the data to pass to template file "index.html"
 type Output struct {
-	Input string
-	Data  []*model.Data
+	Input      string
+	WordCounts []*model.WordCount
 }
 
 func mainPage(w http.ResponseWriter, r *http.Request) {
@@ -39,7 +39,7 @@ func mainPage(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	data, err := databaseHandler.GetWords()
+	wordCounts, err := databaseHandler.GetWords()
 	if err != nil {
 		log.Println(err)
 		fmt.Fprintf(w, err.Error())
@@ -49,8 +49,8 @@ func mainPage(w http.ResponseWriter, r *http.Request) {
 	// html/template already has xss countermeasure function
 	tpl := template.Must(template.ParseFiles("template/index.html"))
 	output := Output{
-		Input: input,
-		Data:  data,
+		Input:      input,
+		WordCounts: wordCounts,
 	}
 
 	tpl.Execute(w, output)

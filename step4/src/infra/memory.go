@@ -8,33 +8,33 @@ import (
 
 // MySQLHandler is implementation of DatabaseHandler
 type MemoryHandler struct {
-	data map[string]int
+	WordCounts map[string]int
 }
 
 // NewMemoryHandler returns MemoryHandler
 func NewMemoryHandler() *MemoryHandler {
-	data := map[string]int{}
-	return &MemoryHandler{data}
+	wordCounts := map[string]int{}
+	return &MemoryHandler{wordCounts}
 }
 
-func (memoryHandler *MemoryHandler) convert(input map[string]int) (output []*model.Data) {
+func (memoryHandler *MemoryHandler) convert(input map[string]int) (output []*model.WordCount) {
 	for k, v := range input {
-		output = append(output, &model.Data{k, v})
+		output = append(output, &model.WordCount{Word: k, Count: v})
 	}
 	return
 }
 
-func (memoryHandler *MemoryHandler) GetWords() (data []*model.Data, err error) {
-	data = memoryHandler.convert(memoryHandler.data)
-	return data, nil
+func (memoryHandler *MemoryHandler) GetWords() (wordCounts []*model.WordCount, err error) {
+	wordCounts = memoryHandler.convert(memoryHandler.WordCounts)
+	return wordCounts, nil
 }
 
 func (memoryHandler *MemoryHandler) UpdateWord(word string) (err error) {
-	_, ok := memoryHandler.data[word]
+	_, ok := memoryHandler.WordCounts[word]
 	if ok == true {
-		memoryHandler.data[word]++
+		memoryHandler.WordCounts[word]++
 		return nil
 	}
-	memoryHandler.data[word] = 1
+	memoryHandler.WordCounts[word] = 1
 	return nil
 }

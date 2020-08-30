@@ -21,11 +21,11 @@ func newHandler(databaseHandler infra.DatabaseHandler) handler {
 
 func (h *handler) getWords() echo.HandlerFunc {
 	return func(c echo.Context) error {
-		data, err := h.databaseHandler.GetWords()
+		wordCounts, err := h.databaseHandler.GetWords()
 		if err != nil {
 			return c.NoContent(http.StatusInternalServerError)
 		}
-		return c.JSON(http.StatusOK, data)
+		return c.JSON(http.StatusOK, wordCounts)
 	}
 }
 

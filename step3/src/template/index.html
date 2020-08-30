@@ -13,8 +13,8 @@ Input something
 
 <table border='1'>
 <tr><th>word</th><th>count</th></tr>
-{{ range .Data }}
-<tr><td>{{ .Word }}</td><td>{{ .Num }}</td></tr>
+{{ range .WordCounts }}
+<tr><td>{{ .Word }}</td><td>{{ .Count }}</td></tr>
 {{ end }}
 </table>
 

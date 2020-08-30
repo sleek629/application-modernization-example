@@ -22,12 +22,12 @@ if ($_POST['word']) {
   $stmt->bindValue(':word', $word, PDO::PARAM_STR);
   $stmt->execute();
   if (!$stmt->rowCount()){
-    $stmt = $dbh->prepare("INSERT INTO word_tb (word, num) VALUES (:word, :num)");
+    $stmt = $dbh->prepare("INSERT INTO word_tb (word, count) VALUES (:word, :count)");
     $stmt->bindValue(':word', $word, PDO::PARAM_STR);
-    $stmt->bindValue(':num', 1, PDO::PARAM_INT);
+    $stmt->bindValue(':count', 1, PDO::PARAM_INT);
     $stmt->execute();
   } else {
-    $stmt = $dbh->prepare("UPDATE word_tb SET num = num + 1 WHERE word = :word");
+    $stmt = $dbh->prepare("UPDATE word_tb SET count = count + 1 WHERE word = :word");
     $stmt->bindValue(':word', $word, PDO::PARAM_STR);
     $stmt->execute();
   }
@@ -37,11 +37,11 @@ if ($_POST['word']) {
 <table border='1'>
 <tr><th>word</th><th>count</th></tr>
 <?php
-$stmt = $dbh->prepare('SELECT word, num FROM word_tb ORDER BY num DESC');
+$stmt = $dbh->prepare('SELECT word, count FROM word_tb ORDER BY count DESC');
 $stmt->execute();
 $lines = $stmt->fetchAll();
 foreach($lines as $line) {
-  echo '<tr><td>' . htmlspecialchars($line['word'], ENT_QUOTES, 'UTF-8') . '</td><td>' . $line['num'] . "</td></tr>\n";
+  echo '<tr><td>' . htmlspecialchars($line['word'], ENT_QUOTES, 'UTF-8') . '</td><td>' . $line['count'] . "</td></tr>\n";
 }
 ?>
 </table>

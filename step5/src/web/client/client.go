@@ -13,7 +13,7 @@ import (
 )
 
 type WordsClient interface {
-	GetWords() (data []*model.Data, err error)
+	GetWords() (wordCounts []*model.WordCount, err error)
 	UpdateWord(word string) (err error)
 }
 
@@ -25,7 +25,7 @@ func NewHttpClient(apiURL string) httpClient {
 	return httpClient{apiURL}
 }
 
-func (h httpClient) GetWords() (data []*model.Data, err error) {
+func (h httpClient) GetWords() (wordCounts []*model.WordCount, err error) {
 	u, _ := url.Parse(h.apiURL)
 	u.Path = path.Join(u.Path, "words")
 	req, err := http.NewRequest("GET", u.String(), nil)
@@ -47,11 +47,11 @@ func (h httpClient) GetWords() (data []*model.Data, err error) {
 	byteArray, _ := ioutil.ReadAll(res.Body)
 	jsonBytes := ([]byte)(byteArray)
 
-	if err := json.Unmarshal(jsonBytes, &data); err != nil {
+	if err := json.Unmarshal(jsonBytes, &wordCounts); err != nil {
 		fmt.Println("JSON Unmarshal error:", err)
 		return nil, err
 	}
-	return data, nil
+	return wordCounts, nil
 }
 
 func (h httpClient) UpdateWord(word string) (err error) {
