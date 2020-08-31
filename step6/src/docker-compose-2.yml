@@ -1,0 +1,19 @@
+version: '3'
+services:
+  web:
+    build:
+      context: ./internal/web
+    environment:
+      WORDAPI_ADDRESS: wordservice:50000
+    ports:
+      - "8080:8080"
+    depends_on:
+      - "wordservice"
+    restart: always
+
+  wordservice:
+    build:
+      context: ./internal/wordservice
+    environment:
+      PORT: 50000
+    restart: always
