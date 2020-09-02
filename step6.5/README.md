@@ -2,6 +2,8 @@
 
 In this step, Vue is used in frontend.
 
+<img src="./images/index.png" width="480px">
+
 The application is devided into 4 components.
 
 - web (Vue): This is front-end application. This application gets data from wordservice using gRPC client.
