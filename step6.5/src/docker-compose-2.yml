@@ -1,0 +1,26 @@
+version: '3'
+services:
+  web:
+    build:
+      context: ./frontend
+    environment:
+      # Avoid problems with CORS
+      VUE_APP_WORDAPI_ADDRESS: "http://INSTANCE_IP:8080"
+    ports:
+      - "8080:8080"
+    depends_on:
+      - "wordservice"
+    restart: always
+
+  wordservice:
+    build:
+      context: ./wordservice
+    environment:
+      PORT: 50000
+    restart: always
+
+  envoy:
+    build:
+      context: ./envoy
+    ports:
+      - "8001:8001"

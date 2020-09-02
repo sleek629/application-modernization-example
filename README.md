@@ -40,6 +40,10 @@ App with better architecture
 
 App with REST API
 
-
 ### Step 6
+
 App with gRPC
+
+### Step 6.5
+
+App using Vuejs in frontend

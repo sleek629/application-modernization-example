@@ -1,0 +1,34 @@
+version: '3'
+services:
+  mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_RANDOM_ROOT_PASSWORD: "yes"
+    volumes:
+      - ./mysql:/docker-entrypoint-initdb.d
+
+  web:
+    build:
+      context: ./frontend
+    environment:
+      # Avoid problems with CORS
+      VUE_APP_WORDAPI_ADDRESS: "http://INSTANCE_IP:8080"
+    ports:
+      - "8080:8080"
+    depends_on:
+      - "wordservice"
+    restart: always
+
+  wordservice:
+    build:
+      context: ./wordservice
+    environment:
+      MYSQL_CONNECTION: user:Password@123@tcp(mysql:3306)/word_db
+      PORT: 50000
+    restart: always
+
+  envoy:
+    build:
+      context: ./envoy
+    ports:
+      - "8001:8001"
