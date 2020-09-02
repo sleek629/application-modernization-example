@@ -23,7 +23,7 @@ Run this command on Container-Optimized OS.
 ```bash
 # Clone source files
 git clone https://github.com/sleek629/application-modernization-example.git
-cd application-modernization-example/step56/src
+cd application-modernization-example/step6/src
 ```
 
 ### Using MySQL
