@@ -26,7 +26,7 @@ type Output struct {
 }
 
 func getWords() (wordCounts []WordCount, err error) {
-	rows, err := db.Query("SELECT word, count FROM word_tb ORDER BY count DESC")
+	rows, err := db.Query("SELECT word, count FROM word_tb ")
 	if err != nil {
 		return nil, err
 	}

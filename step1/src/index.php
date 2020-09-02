@@ -37,7 +37,7 @@ if ($_POST['word']) {
 <table border='1'>
 <tr><th>word</th><th>count</th></tr>
 <?php
-$stmt = $dbh->prepare('SELECT word, count FROM word_tb ORDER BY count DESC');
+$stmt = $dbh->prepare('SELECT word, count FROM word_tb');
 $stmt->execute();
 $lines = $stmt->fetchAll();
 foreach($lines as $line) {

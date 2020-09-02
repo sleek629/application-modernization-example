@@ -26,7 +26,7 @@ func NewSQLHandler(conn string) *MySQLHandler {
 }
 
 func (mySQLHandler *MySQLHandler) GetWords() (wordCounts []*model.WordCount, err error) {
-	rows, err := mySQLHandler.db.Query("SELECT word, count FROM word_tb ORDER BY count DESC")
+	rows, err := mySQLHandler.db.Query("SELECT word, count FROM word_tb")
 	if err != nil {
 		return nil, err
 	}
