@@ -24,4 +24,6 @@ services:
     environment:
       MYSQL_CONNECTION: user:Password@123@tcp(mysql:3306)/word_db
       PORT: 50000
+    ports:
+      - "50000:50000"
     restart: always
