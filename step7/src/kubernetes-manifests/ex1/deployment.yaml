@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: word-app
+  namespace: word-database
+  labels:
+    app: word-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: word-app
+  template:
+    metadata:
+      labels:
+        app: word-app
+    spec:
+      containers:
+      - name: web
+        image: gcr.io/application-modernization-ex/web:1.0
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+        env:
+        - name: WORDAPI_ADDRESS
+          value: localhost:50000
+      - name: wordservice
+        image: gcr.io/application-modernization-ex/wordservice:1.0
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 50000

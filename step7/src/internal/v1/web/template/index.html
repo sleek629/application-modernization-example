@@ -1,0 +1,22 @@
+<html>
+<head><title>Word Database</title></head>
+
+<body>
+    <h1>Word Database (Hostname: {{ .Hostname }})</h1>
+Input something
+<form method="POST" action="/">
+<input type="text" name="word">
+<input type="submit" value="submit">
+</form>
+
+<p>Your input: {{ .Input }}</p>
+
+<table border='1'>
+<tr><th>word</th><th>count</th></tr>
+{{ range .WordCounts.Wc }}
+<tr><td>{{ .Word }}</td><td>{{ .Count }}</td></tr>
+{{ end }}
+</table>
+
+</body>
+</html>

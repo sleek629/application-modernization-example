@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+service WordAPI {
+  rpc GetWords (Empty) returns (WordCounts) {}
+  rpc UpdateWord (Word) returns (Empty) {}
+}
+
+message Empty {}
+
+message WordCount {
+  string word = 1;
+  int32 count = 2;
+}
+
+message WordCounts {
+  repeated WordCount wc = 1;
+}
+
+message Word {
+  string word = 1;
+}
